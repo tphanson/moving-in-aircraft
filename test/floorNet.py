@@ -52,6 +52,8 @@ def infer(botshell, debug=False):
         print("======================================")
         # Get images
         _, frame = camera.read()
+        (h, w, _) = frame.shape
+        frame = frame[:int(h/2), :]
         print('*** Debug camera shape:', frame.shape)
 
         # Infer
