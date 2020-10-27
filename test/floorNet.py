@@ -59,7 +59,7 @@ def infer(botshell, debug=False):
         # Infer
         img, mask = floorNet.predict(frame)
         (h, _) = mask.shape
-        mask[:int(h/2), :] = 0  # remove noise in back
+        mask[int(h/2):h, :] = 0  # remove noise in back
         img = (img*127.5+127.5)/255
 
         # Visualize
