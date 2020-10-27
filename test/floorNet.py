@@ -61,7 +61,6 @@ def infer(botshell, debug=False):
         # Visualize
         if debug:
             mask = image.kmeans(mask)
-            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             talker.push(img)
