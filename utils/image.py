@@ -15,17 +15,24 @@ def mask2Pointcloud(mask):
     return pointcloud
 
 
+def fancy_assign(arr, coor, value):
+    rows, cols = zip(*coor)
+    arr[rows, cols] = value
+    return arr
+
+
 def kmeans(mask):
     poinclount = mask2Pointcloud(mask)
     kstart = time.time()
-    kmeans = MiniBatchKMeans(n_clusters=2).fit(poinclount)
+    model = MiniBatchKMeans(n_clusters=2).fit(poinclount)
     print('KMeans estimated time: {:.4f}'.format(time.time()-kstart))
     mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-    for ([i, j], l) in zip(poinclount, kmeans.labels_):
-        if l == 0:
-            mask[i, j] = [1, 0, 0]
-        else:
-            mask[i, j] = [0, 1, 0]
+    blue = poinclount[np.array(model.labels_, dtype=bool)]
+    green = poinclount[np.array(model.labels_-1, dtype=bool)]
+    astart = time.time()
+    fancy_assign(mask, blue, [1, 0, 0])
+    fancy_assign(mask, green, [0, 1, 0])
+    print('Colorization estimated time: {:.4f}'.format(time.time()-astart))
     return mask
 
 
