@@ -29,9 +29,12 @@ def kmeans(mask):
     mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
     blue = poinclount[np.array(model.labels_, dtype=bool)]
     green = poinclount[np.array(model.labels_-1, dtype=bool)]
+    [[yl, xl], [yr, xr]] = model.cluster_centers_
     astart = time.time()
     fancy_assign(mask, blue, [1, 0, 0])
     fancy_assign(mask, green, [0, 1, 0])
+    mask = cv.circle(mask, (int(xl), int(yl)), 3, [0, 0, 1], 3)
+    mask = cv.circle(mask, (int(xr), int(yr)), 3, [0, 0, 1], 3)
     print('Colorization estimated time: {:.4f}'.format(time.time()-astart))
     return mask
 
