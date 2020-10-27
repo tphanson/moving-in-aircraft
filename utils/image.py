@@ -6,12 +6,14 @@ from sklearn.cluster import MiniBatchKMeans
 COLOR_RED = [0, 0, 255]
 OPACITY = 0.5
 
+
 def mask2Pointcloud(mask):
     (h, w) = mask.shape
     xv, yv = np.meshgrid(np.arange(h), np.arange(w))
     coordinate = np.stack((yv, xv), axis=2)
     pointcloud = coordinate[np.array(mask, dtype=bool)]
     return pointcloud
+
 
 def kmeans(mask):
     poinclount = mask2Pointcloud(mask)
@@ -25,6 +27,7 @@ def kmeans(mask):
         else:
             mask[i, j] = [0, 1, 0]
     return mask
+
 
 def get_mask_by_polygon(img, polygon):
     mask = np.zeros(img.shape, dtype=img.dtype)
