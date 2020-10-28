@@ -36,7 +36,7 @@ def kmeans(mask):
     mask = cv.circle(mask, (int(xl), int(yl)), 3, [0, 0, 1], 3)
     mask = cv.circle(mask, (int(xr), int(yr)), 3, [0, 0, 1], 3)
     print('Colorization estimated time: {:.4f}'.format(time.time()-astart))
-    return mask
+    return mask, model.cluster_centers_
 
 
 def get_mask_by_polygon(img, polygon):

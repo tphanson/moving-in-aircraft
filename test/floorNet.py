@@ -24,7 +24,7 @@ def ml():
         img = (img*127.5+127.5)/255
 
         # Visualization
-        mask = image.kmeans(mask)
+        mask, _ = image.kmeans(mask)
         img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
         img = cv.resize(img, (512, 512))
         cv.imshow('Video', img)
@@ -59,10 +59,11 @@ def infer(botshell, debug=False):
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
+        mask, clusters = image.kmeans(mask)
+        print(clusters)
 
         # Visualize
         if debug:
-            mask = image.kmeans(mask)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             talker.push(img)
