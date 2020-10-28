@@ -14,6 +14,23 @@ DISTORTION_COEFF = np.array(
     [0.7365, 0.2228, 0, 0.0002, 0.0074, 1.097, 0.4153, 0.0477])
 
 
+class Angle:
+    def __init__(self, max_length=10):
+        self._max_length = max_length
+        self._q = np.array([], dtype=np.float32)
+
+    def __len__(self):
+        return len(self._q)
+
+    def push(self, ele):
+        while len(self) >= self._max_length:
+            self._q = self._q[1:]
+        self._q = np.append(self._q, ele)
+
+    def mean(self):
+        return np.median(self._q)
+
+
 class Odometry:
     def __init__(self, botshell, image_shape, num_of_samples=100):
         self.botshell = botshell
