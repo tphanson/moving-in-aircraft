@@ -73,6 +73,7 @@ def infer(botshell, debug=False):
         if diff_angle < -2:
             odo.move((1, -25))
         elif diff_angle > 2:
+            odo.move((25, -1))
         else:
             odo.move((50, -50))
 
