@@ -69,11 +69,12 @@ def infer(botshell, debug=False):
         angles.push(np.arctan(y/x)*180/np.pi)
         diff_angle = angles.mean()
 
-        while diff_angle < -5:
+        if diff_angle < -5:
             odo.move((0, 0.1))
-        while diff_angle > 5:
+        elif diff_angle > 5:
             odo.move((0.1, 0))
-        odo.move((0.1, 0.1))
+        else:
+            odo.move((0.1, 0.1))
 
         # Visualize
         if debug:
