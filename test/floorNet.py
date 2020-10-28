@@ -71,11 +71,11 @@ def infer(botshell, debug=False):
 
         print('*** Debug differential angle:', diff_angle)
         if diff_angle < -5:
-            odo.move((0, 100))
+            odo.move((0, -50))
         elif diff_angle > 5:
-            odo.move((100, 0))
+            odo.move((50, 0))
         else:
-            odo.move((100, 100))
+            odo.move((50, -50))
 
         # Visualize
         if debug:
