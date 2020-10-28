@@ -60,7 +60,7 @@ def infer(botshell, debug=False):
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         mask, clusters = image.kmeans(mask)
-        print(clusters)
+        print(clusters[0] - clusters[1])
 
         # Visualize
         if debug:
