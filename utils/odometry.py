@@ -70,7 +70,8 @@ class Odometry:
         return f'set_velocity {vleft} {vfwd}\n'.encode()
     
     def move(self, signal):
-        self._move_cmd(signal)
+        (lw, rw) = signal
+        self.botshell.sendall(f'manual_move {lw} {rw}\n'.encode())
 
     def get_velocity(self):
         self.botshell.sendall(b'get_velocity\n')
