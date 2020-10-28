@@ -66,8 +66,9 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         mask, clusters = image.kmeans(mask)
         [y, x] = clusters[0] - clusters[1]
-        angles.push(np.arctan(y/x)*180/np.pi)
-        diff_angle = angles.mean()
+        diff_angle = np.arctan(y/x)*180/np.pi
+        # angles.push(np.arctan(y/x)*180/np.pi)
+        # diff_angle = angles.mean()
 
         print('*** Debug differential angle:', diff_angle)
         if diff_angle < -2:
