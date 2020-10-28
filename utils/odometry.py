@@ -71,7 +71,6 @@ class Odometry:
     
     def move(self, signal):
         self._move_cmd(signal)
-        time.sleep(0.05)
 
     def get_velocity(self):
         self.botshell.sendall(b'get_velocity\n')
