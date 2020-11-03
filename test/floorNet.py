@@ -28,7 +28,8 @@ def detect_edge(_):
         # Calculate frames per second (FPS)
         end = time.time()
         fps = 1/(end-start)
-        time.sleep(0.1 - (end-start))
+        if end-start < 0.1:
+            time.sleep(0.1 - (end-start))
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
 
