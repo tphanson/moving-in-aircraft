@@ -65,11 +65,11 @@ def detect_edge(_):
         for intersection in intersections:
             img = cv.circle(img, intersection, 2, RED, thickness=2)
 
-        window = [(0, 0), (50, 50)]
+        window = [(0, 0), (0, 0)]
         maximum = 0
-        for y in range(0, 512, 10):
-            for x in range(0, 512, 10):
-                (x1, y1, x2, y2) = (x, y, x+50, y+50)
+        for y in range(0, 512, 5):
+            for x in range(0, 512, 5):
+                (x1, y1, x2, y2) = (x, y, x+25, y+25)
                 counter = 0
                 for (a, b) in intersections:
                     if a == min(x2, max(x1, a)) and b == min(y2, max(y1, b)):
