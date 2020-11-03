@@ -39,6 +39,7 @@ def detect_edge(_):
             canny, 1, np.pi / 180, 50, minLineLength=100, maxLineGap=100)
         lines = []
         if polar_lines is not None:
+            print(polar_lines)
             lines = map(segment, list(polar_lines))
             for line in lines:
                 print(line)
