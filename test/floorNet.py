@@ -36,9 +36,11 @@ def detect_edge(_):
         blur = cv.GaussianBlur(gray, (11, 11), 0)
         canny = cv.Canny(blur, 50, 150)
         polar_lines = cv.HoughLines(canny, 1, np.pi / 180, 200)
-        lines = map(segment, list(polar_lines))
-        for line in lines:
-            print(line)
+        lines = []
+        if polar_lines is not None:
+            lines = map(segment, list(polar_lines))
+            for line in lines:
+                print(line)
         print('=============================')
 
         img = cv.cvtColor(canny, cv.COLOR_GRAY2RGB)
