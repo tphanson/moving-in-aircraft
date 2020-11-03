@@ -41,10 +41,10 @@ def detect_edge(_):
                                minLineLength=100, maxLineGap=100)
         lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (start, stop) in lines:
-            print(line)
+            print(start, stop)
+            img = cv.line(img, list(start), list(stop), RED, thickness=2)
         print('=============================')
 
-        img = cv.line(img, list(start), list(stop), RED, thickness=2)
         talker.push(img)
 
         # Calculate frames per second (FPS)
