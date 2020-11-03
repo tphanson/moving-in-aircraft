@@ -21,6 +21,7 @@ def detect_edge(botshell):
         gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
         blur = cv.GaussianBlur(gray, (15, 15), 0)
         canny = cv.Canny(blur, 50, 150)
+        print(canny)
         talker.push(canny)
 
         # Calculate frames per second (FPS)
