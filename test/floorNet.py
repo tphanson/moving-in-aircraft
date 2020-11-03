@@ -20,7 +20,7 @@ def detect_edge(_):
 
         img = cv.resize(frame, (512, 512))
         gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
-        blur = cv.GaussianBlur(gray, (10, 10), 0)
+        blur = cv.GaussianBlur(gray, (11, 11), 0)
         canny = cv.Canny(blur, 50, 150)
         img = cv.cvtColor(canny, cv.COLOR_GRAY2RGB)
         talker.push(img)
