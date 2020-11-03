@@ -18,7 +18,7 @@ def compute_interception(line1, line2):
 
 
 def generaline_segment(segment):
-    [x1, y1, x2, y2] = segment
+    [[x1, y1], [x2, y2]] = segment
     slope = (y1-y2)/(x1-x2)
     intercept = y1-slope*x1
     return (slope, intercept)
