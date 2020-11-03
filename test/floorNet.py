@@ -7,6 +7,7 @@ from src.floorNet import FloorNet
 
 RED = [0, 0, 255]
 GREEN = [0, 255, 0]
+BLUE = [255, 0, 0]
 
 
 def compute_interception(line1, line2):
@@ -64,19 +65,19 @@ def detect_edge(_):
         for intersection in intersections:
             img = cv.circle(img, intersection, 2, RED, thickness=2)
 
-        window = (0, 0)
+        window = [(0, 0), (10, 10)]
         maximum = 0
-        for y in range(512):
-            for x in range(512):
+        for y in range(0, 512, 5):
+            for x in range(0, 512, 5):
                 (x1, y1, x2, y2) = (x, y, x+10, y+10)
                 counter = 0
                 for (a, b) in intersections:
                     if a == min(x2, max(x1, a)) and b == min(y2, max(y1, b)):
                         counter += 1
                 if counter > maximum:
-                    window = (a, b)
+                    window = [(x1, y1), (x2, y2)]
                     maximum = counter
-        print(window)
+        img = cv.rectangle(img, window[0], window[1], BLUE, thickness=2)
         talker.push(img)
 
         # Calculate frames per second (FPS)
