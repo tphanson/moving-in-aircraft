@@ -6,6 +6,19 @@ from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
 
+def segment(rho, theta):
+    a = np.cos(theta)
+    b = np.sin(theta)
+    x_0 = a * rho
+    y_0 = b * rho
+    x_1 = int(x_0 + 1000 * (-b))
+    y_1 = int(y_0 + 1000 * (a))
+    x_2 = int(x_0 - 1000 * (-b))
+    y_2 = int(y_0 - 1000 * (a))
+
+    return ((x_1, y_1), (x_2, y_2))
+
+
 def detect_edge(_):
     camera = cv.VideoCapture(0)
     rosimg = ros.ROSImage()
@@ -21,7 +34,13 @@ def detect_edge(_):
         img = cv.resize(frame, (512, 512))
         gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
         blur = cv.GaussianBlur(gray, (11, 11), 0)
-        canny = cv.Canny(blur, 50, 100)
+        canny = cv.Canny(blur, 50, 150)
+        polar_lines = cv.HoughLines(canny, 1, np.pi / 180, 200)
+        lines = map(segment, list(polar_lines))
+        for line in lines:
+            print(line)
+        print('=============================')
+
         img = cv.cvtColor(canny, cv.COLOR_GRAY2RGB)
         talker.push(img)
 
