@@ -46,7 +46,7 @@ def detect_edge(_):
                                threshold=60, minLineLength=50, maxLineGap=20)
         segments = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (a, b) in segments:
-            img = cv.line(img, (a[0], a[1]), (b[0], b[1]), GREEN)
+            img = cv.line(img, (a[0], a[1]), (b[0], b[1]), GREEN, thickness=2)
         intersections = []
         for index, segment in enumerate(segments):
             for next_segment in segments[index+1:]:
@@ -55,14 +55,13 @@ def detect_edge(_):
                 intersection = compute_interception(line, next_line)
                 if intersection is not None:
                     intersections.append(intersection)
-        print(len(intersections))
+        for intersection in intersections:
+            img = cv.circle(img, intersection, 2, RED, thickness=2)
         talker.push(img)
 
         # Calculate frames per second (FPS)
         end = time.time()
         fps = 1/(end-start)
-        if end-start < 0.1:
-            time.sleep(0.1 - (end-start))
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
 
