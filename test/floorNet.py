@@ -7,6 +7,8 @@ from src.floorNet import FloorNet
 
 def detect_edge():
     camera = cv.VideoCapture(0)
+    rosimg = ros.ROSImage()
+    talker = rosimg.gen_talker('/ocp/draw_image/compressed')
 
     while True:
         start = time.time()
@@ -16,9 +18,8 @@ def detect_edge():
         print('*** Debug camera shape:', frame.shape)
 
         img = cv.resize(frame, (512, 512))
-        cv.imshow('Video', img)
-        if cv.waitKey(10) & 0xFF == ord('q'):
-            break
+        img = img * 255
+        talker.push(img)
 
         # Calculate frames per second (FPS)
         end = time.time()
