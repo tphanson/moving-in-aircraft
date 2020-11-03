@@ -8,19 +8,6 @@ from src.floorNet import FloorNet
 RED = [0, 0, 255]
 
 
-def segment(rho, theta):
-    a = np.cos(theta)
-    b = np.sin(theta)
-    x_0 = a * rho
-    y_0 = b * rho
-    x_1 = int(x_0 + 1000 * (-b))
-    y_1 = int(y_0 + 1000 * (a))
-    x_2 = int(x_0 - 1000 * (-b))
-    y_2 = int(y_0 - 1000 * (a))
-
-    return ((x_1, y_1), (x_2, y_2))
-
-
 def detect_edge(_):
     camera = cv.VideoCapture(0)
     rosimg = ros.ROSImage()
@@ -37,8 +24,8 @@ def detect_edge(_):
         gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
         blur = cv.GaussianBlur(gray, (11, 11), 0)
         canny = cv.Canny(blur, 50, 150)
-        hough = cv.HoughLinesP(canny, 1, np.pi / 180, 80,
-                               minLineLength=30, maxLineGap=10)
+        hough = cv.HoughLinesP(canny, 1, np.pi / 180,
+                               threshold=50, minLineLength=50, maxLineGap=20)
         lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (a, b) in lines:
             img = cv.line(img, (a[0], a[1]), (b[0], b[1]), RED)
