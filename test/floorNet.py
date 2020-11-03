@@ -5,6 +5,27 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
+def detect_edge():
+    camera = cv.VideoCapture(0)
+
+    while True:
+        start = time.time()
+        print("======================================")
+        # Get images
+        _, frame = camera.read()
+        print('*** Debug camera shape:', frame.shape)
+
+        img = cv.resize(frame, (512, 512))
+        cv.imshow('Video', img)
+        if cv.waitKey(10) & 0xFF == ord('q'):
+            break
+
+        # Calculate frames per second (FPS)
+        end = time.time()
+        fps = 1/(end-start)
+        print('Total estimated time: {:.4f}'.format(end-start))
+        print("FPS: {:.1f}".format(fps))
+
 
 def cluster():
     # Init modules
@@ -17,10 +38,7 @@ def cluster():
         start = time.time()
         print("======================================")
         # Get images
-        ok, frame = camera.read()
-        if not ok:
-            time.sleep(0.05)
-            continue
+        _, frame = camera.read()
         print('*** Debug camera shape:', frame.shape)
 
         # Infer
