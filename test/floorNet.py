@@ -5,7 +5,7 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
-GREEN = [255, 0, 0]
+GREEN = [0, 255, 0]
 
 
 def detect_edge(_):
