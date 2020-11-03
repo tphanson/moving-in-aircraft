@@ -12,6 +12,8 @@ GREEN = [0, 255, 0]
 def compute_interception(line1, line2):
     (slope1, intercept1) = line1
     (slope2, intercept2) = line2
+    if slope1-slope2 == 0:
+        return None
     x = (intercept2-intercept1)/(slope1-slope2)
     y = slope1*x+intercept1
     return (x, y)
@@ -51,7 +53,8 @@ def detect_edge(_):
                 line = generaline_segment(segment)
                 next_line = generaline_segment(next_segment)
                 intersection = compute_interception(line, next_line)
-                intersections.append(intersection)
+                if intersection is not None:
+                    intersections.append(intersection)
         print(len(intersections))
         talker.push(img)
 
