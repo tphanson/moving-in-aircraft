@@ -16,7 +16,7 @@ def compute_interception(line1, line2):
         return None
     x = (intercept2-intercept1)/(slope1-slope2)
     y = slope1*x+intercept1
-    return (x, y)
+    return (int(x), int(y))
 
 
 def generaline_segment(segment):
