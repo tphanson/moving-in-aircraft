@@ -5,7 +5,8 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
-def detect_edge(botshell):
+
+def detect_edge(_):
     camera = cv.VideoCapture(0)
     rosimg = ros.ROSImage()
     talker = rosimg.gen_talker('/ocp/draw_image/compressed')
@@ -22,12 +23,12 @@ def detect_edge(botshell):
         blur = cv.GaussianBlur(gray, (15, 15), 0)
         canny = cv.Canny(blur, 50, 150)
         img = cv.cvtColor(canny, cv.COLOR_GRAY2RGB)
-        # img = img * 255
         talker.push(img)
 
         # Calculate frames per second (FPS)
         end = time.time()
         fps = 1/(end-start)
+        time.sleep(0.1 - (end-start))
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
 
