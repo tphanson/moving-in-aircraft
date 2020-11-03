@@ -38,7 +38,7 @@ def detect_edge(_):
         blur = cv.GaussianBlur(gray, (11, 11), 0)
         canny = cv.Canny(blur, 50, 150)
         hough = cv.HoughLinesP(canny, 1, np.pi / 180, 80,
-                               minLineLength=50, maxLineGap=20)
+                               minLineLength=30, maxLineGap=10)
         lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (a, b) in lines:
             img = cv.line(img, (a[0], a[1]), (b[0], b[1]), RED)
