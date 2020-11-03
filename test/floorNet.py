@@ -5,6 +5,8 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
+RED = [0, 0, 255]
+
 
 def segment(rho, theta):
     a = np.cos(theta)
@@ -35,14 +37,14 @@ def detect_edge(_):
         gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
         blur = cv.GaussianBlur(gray, (11, 11), 0)
         canny = cv.Canny(blur, 50, 150)
-        hough = cv.HoughLinesP(
-            canny, 1, np.pi / 180, 50, minLineLength=100, maxLineGap=100)
-        lines = np.squeeze(hough)
+        hough = cv.HoughLinesP(canny, 1, np.pi / 180, 50,
+                               minLineLength=100, maxLineGap=100)
+        lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for line in lines:
             print(line)
         print('=============================')
 
-        img = cv.cvtColor(canny, cv.COLOR_GRAY2RGB)
+        img = cv.line(canny, cv.COLOR_GRAY2RGB)
         talker.push(img)
 
         # Calculate frames per second (FPS)
