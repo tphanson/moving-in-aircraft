@@ -5,7 +5,23 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
+RED = [0, 0, 255]
 GREEN = [0, 255, 0]
+
+
+def compute_interception(line1, line2):
+    (slope1, intercept1) = line1
+    (slope2, intercept2) = line2
+    x = (intercept2-intercept1)/(slope1-slope2)
+    y = slope1*x+intercept1
+    return (x, y)
+
+
+def generaline_segment(segment):
+    [x1, y1, x2, y2] = segment
+    slope = (y1-y2)/(x1-x2)
+    intercept = y1-slope*x1
+    return (slope, intercept)
 
 
 def detect_edge(_):
@@ -26,10 +42,17 @@ def detect_edge(_):
         canny = cv.Canny(blur, 50, 150)
         hough = cv.HoughLinesP(canny, 1, np.pi / 180,
                                threshold=60, minLineLength=50, maxLineGap=20)
-        lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
-        for (a, b) in lines:
+        segments = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
+        for (a, b) in segments:
             img = cv.line(img, (a[0], a[1]), (b[0], b[1]), GREEN)
-        print(len(lines))
+        intersections = []
+        for index, segment in enumerate(segments):
+            for next_segment in segments[index+1:]:
+                line = generaline_segment(segment)
+                next_line = generaline_segment(next_segment)
+                intersection = compute_interception(line, next_line)
+                intersections.append(intersection)
+        print(len(intersections))
         talker.push(img)
 
         # Calculate frames per second (FPS)
