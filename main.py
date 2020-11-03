@@ -19,6 +19,6 @@ if __name__ == "__main__":
         if sys.argv[2] == 'cluster':
             floorNet.cluster()
         if sys.argv[2] == 'detect_edge':
-            floorNet.detect_edge()
+            floorNet.detect_edge(gen_botshell())
     else:
         print("Error: Invalid option!")
