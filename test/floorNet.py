@@ -5,7 +5,7 @@ import numpy as np
 from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
-RED = [0, 0, 255]
+GREEN = [255, 0, 0]
 
 
 def detect_edge(_):
@@ -28,7 +28,7 @@ def detect_edge(_):
                                threshold=60, minLineLength=50, maxLineGap=20)
         lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (a, b) in lines:
-            img = cv.line(img, (a[0], a[1]), (b[0], b[1]), RED)
+            img = cv.line(img, (a[0], a[1]), (b[0], b[1]), GREEN)
         print(len(lines))
         talker.push(img)
 
