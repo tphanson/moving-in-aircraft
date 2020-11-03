@@ -37,6 +37,7 @@ def detect_edge(_):
         canny = cv.Canny(blur, 50, 150)
         lines = cv.HoughLinesP(
             canny, 1, np.pi / 180, 50, minLineLength=100, maxLineGap=100)
+        print(lines)
         for line in lines:
             print(line)
         print('=============================')
