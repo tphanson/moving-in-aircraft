@@ -21,6 +21,8 @@ def compute_interception(line1, line2):
 
 def generaline_segment(segment):
     [[x1, y1], [x2, y2]] = segment
+    if x1-x2 == 0:
+        return None
     slope = (y1-y2)/(x1-x2)
     intercept = y1-slope*x1
     return (slope, intercept)
@@ -49,9 +51,13 @@ def detect_edge(_):
             img = cv.line(img, (a[0], a[1]), (b[0], b[1]), GREEN, thickness=2)
         intersections = []
         for index, segment in enumerate(segments):
+            line = generaline_segment(segment)
+            if line is None:
+                continue
             for next_segment in segments[index+1:]:
-                line = generaline_segment(segment)
                 next_line = generaline_segment(next_segment)
+                if next_line is None:
+                    continue
                 intersection = compute_interception(line, next_line)
                 if intersection is not None:
                     intersections.append(intersection)
