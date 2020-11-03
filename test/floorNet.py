@@ -6,7 +6,7 @@ from utils import ros, image, odometry
 from src.floorNet import FloorNet
 
 
-def ml():
+def cluster():
     # Init modules
     floorNet = FloorNet()
     camera = cv.VideoCapture(0)
@@ -17,7 +17,10 @@ def ml():
         start = time.time()
         print("======================================")
         # Get images
-        _, frame = camera.read()
+        ok, frame = camera.read()
+        if not ok:
+            time.sleep(0.05)
+            continue
         print('*** Debug camera shape:', frame.shape)
 
         # Infer

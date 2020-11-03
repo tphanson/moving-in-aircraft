@@ -1,6 +1,6 @@
 import sys
 import socket
-from test import floorNet, datacollector
+from test import floorNet
 
 # Init botshell
 def gen_botshell():
@@ -16,12 +16,7 @@ if __name__ == "__main__":
             floorNet.infer(gen_botshell(), debug=True)
         if sys.argv[2] == 'infer':
             floorNet.infer(gen_botshell(), debug=False)
-        if sys.argv[2] == 'ml':
-            floorNet.ml()
-    elif sys.argv[1] == '--ds':
-        if sys.argv[2] == 'calibrate':
-            datacollector.calibrate()
-        if sys.argv[2] == 'collect':
-            datacollector.collect()
+        if sys.argv[2] == 'cluster':
+            floorNet.cluster()
     else:
         print("Error: Invalid option!")
