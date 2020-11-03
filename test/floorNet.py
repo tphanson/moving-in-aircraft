@@ -42,7 +42,8 @@ def detect_edge(_):
         lines = np.reshape(np.squeeze(hough), (hough.shape[0], 2, 2))
         for (start, stop) in lines:
             print(start, stop)
-            img = cv.line(img, list(start), list(stop), RED, thickness=2)
+            img = cv.line(img, (start[0], start[1]),
+                          (stop[0], stop[1]), RED, thickness=2)
         print('=============================')
 
         talker.push(img)
